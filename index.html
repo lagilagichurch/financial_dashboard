@@ -151,7 +151,13 @@
   </section>
 
   <canvas id="monthlyChart" width="600" height="300"></canvas>
-  <canvas id="soliLineChart" width="600" height="300"></canvas>
+ 
+
+  <section class="charts">
+  <h2>Monthly Soli Vakavuvale vs Vakamisinare</h2>
+  <canvas id="vakavuvaleChart"></canvas>
+</section>
+
 
   <h2>📋 Detailed Income & Expenditure Table</h2>
   <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQtRqkHaF_0ZZse_OvtAWBQW_XYTKWhb9NOreAPzYLj15dH3mVu2MRfaw6ZLf0u8Q/pubhtml?widget=true&amp;headers=false"></iframe>
@@ -159,66 +165,48 @@
   <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <script>
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
-    const income = [4486.25, 5774.30, 6666.65, 4109.75, 2932.40, 7339.10];
-    const expenditure = [4128.00, 5328.90, 6179.60, 3738.35, 3200.85, 5734.70];
-
-    const ctx = document.getElementById('monthlyChart').getContext('2d');
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: months,
-        datasets: [
-          {
-            label: 'Income',
-            data: income,
-            backgroundColor: '#26a69a'
-          },
-          {
-            label: 'Expenditure',
-            data: expenditure,
-            backgroundColor: '#e53935'
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          title: {
-            display: true,
-            text: 'Monthly Income vs Expenditure'
-          }
-        }
-      }
-    });
-
-    const soliData = [4160, 3286, 3210, 3008, 2385.10, 4436.00];
-    const ctx2 = document.getElementById('soliLineChart').getContext('2d');
-    new Chart(ctx2, {
-      type: 'line',
-      data: {
-        labels: months,
-        datasets: [{
+<script>
+  const ctx = document.getElementById('vakavuvaleChart').getContext('2d');
+  const vakavuvaleChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+      datasets: [
+        {
           label: 'Soli Vakavuvale',
-          data: soliData,
-          borderColor: '#007bff',
-          backgroundColor: '#007bff44',
-          fill: true,
-          tension: 0.3
-        }]
+          data: [4160, 3286, 3210, 3008, 2385.10, 4436],
+          backgroundColor: 'rgba(54, 162, 235, 0.7)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+        },
+        {
+          label: 'Vakamisinare',
+          data: [2500, 1693, 2419, 1400, 1090, 2220],
+          backgroundColor: 'rgba(255, 99, 132, 0.7)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
       },
-      options: {
-        responsive: true,
-        plugins: {
-          title: {
-            display: true,
-            text: 'Soli Vakavuvale Monthly Contributions'
-          }
+      plugins: {
+        title: {
+          display: true,
+          text: 'Monthly Comparison: Income vs Vakamisinare'
+        },
+        legend: {
+          position: 'top'
         }
       }
-    });
-  </script>
+    }
+  });
+</script>
 
 </body>
 </html>
