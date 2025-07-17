@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Lagilagi Church Finance Dashboard</title>
   <style>
     :root {
@@ -11,9 +11,8 @@
       --danger: #e53935;
       --light: #f4f6f9;
       --text: #333;
-      --white: #ffffff;
+      --white: #fff;
     }
-
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: var(--light);
@@ -21,7 +20,6 @@
       padding: 0;
       color: var(--text);
     }
-
     header {
       background-color: var(--primary);
       color: var(--white);
@@ -29,12 +27,10 @@
       text-align: center;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
-
     header h1 {
       margin: 0;
       font-size: 28px;
     }
-
     .dashboard {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -43,7 +39,6 @@
       max-width: 1200px;
       margin: auto;
     }
-
     .card {
       background: var(--white);
       padding: 20px;
@@ -51,35 +46,29 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.06);
       transition: transform 0.2s ease;
     }
-
     .card:hover {
       transform: translateY(-5px);
     }
-
     .card h3 {
       margin-top: 0;
       color: var(--primary);
     }
-
     .card p {
       font-size: 20px;
       font-weight: bold;
     }
-
     .progress-container {
       background: #ddd;
       border-radius: 20px;
       overflow: hidden;
       margin-top: 10px;
     }
-
     .progress-bar {
       height: 20px;
       background: var(--accent);
       width: 33%;
       transition: width 0.4s ease;
     }
-
     canvas {
       background: var(--white);
       border-radius: 12px;
@@ -89,23 +78,20 @@
       padding: 10px;
       max-width: 100%;
     }
-
     h2 {
       text-align: center;
       color: var(--primary);
       margin-top: 40px;
     }
-
     iframe {
       width: 95%;
       height: 600px;
       border: none;
-      margin: 20px auto;
+      margin: 20px auto 60px;
       display: block;
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
-
     @media (max-width: 600px) {
       header h1 {
         font-size: 22px;
@@ -128,18 +114,17 @@
       <h3>Total Expenditure (Jan–Jun)</h3>
       <p>$28,310.40</p>
     </div>
-  
     <div class="card">
-  <h3>Total Soli Vakavuvale (Jan–Jun)</h3>
-  <p>$20,485.10</p>
-</div>
-    <div class="card">
-      <h3>Soli Vakavuvale Remaining (Jul - Dec)</h3>
-      <p>$24,926.55</p>
+      <h3>Total Soli Vakavuvale (Jan–Jun)</h3>
+      <p>$20,485.10</p>
     </div>
-      <div class="card">
-      <h3>Vakamisinare Remaining (Jul - Dec)</h3>
+    <div class="card">
+      <h3>Vakamisinare Target Remaining</h3>
       <p>$22,939.65</p>
+    </div>
+    <div class="card">
+      <h3>Soli Vakavuvale Remaining Estimate</h3>
+      <p>$24,926.55</p>
     </div>
     <div class="card" style="grid-column: span 2;">
       <h3>Vakamisinare Progress</h3>
@@ -150,63 +135,77 @@
     </div>
   </section>
 
-  <canvas id="monthlyChart" width="600" height="300"></canvas>
- 
-
-  <section class="charts">
   <h2>Monthly Soli Vakavuvale vs Vakamisinare</h2>
-  <canvas id="vakavuvaleChart"></canvas>
-</section>
-
+  <canvas id="lineChart"></canvas>
 
   <h2>📋 Detailed Income & Expenditure Table</h2>
   <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQtRqkHaF_0ZZse_OvtAWBQW_XYTKWhb9NOreAPzYLj15dH3mVu2MRfaw6ZLf0u8Q/pubhtml?widget=true&amp;headers=false"></iframe>
 
-  <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-  const ctx = document.getElementById('vakavuvaleChart').getContext('2d');
-  const vakavuvaleChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-      datasets: [
-        {
-          label: 'Soli Vakavuvale',
-          data: [4160, 3286, 3210, 3008, 2385.10, 4436],
-          backgroundColor: 'rgba(54, 162, 235, 0.7)',
-          borderColor: 'rgba(54, 162, 235, 1)',
-          borderWidth: 1
-        },
-        {
-          label: 'Vakamisinare',
-          data: [2500, 1693, 2419, 1400, 1090, 2220],
-          backgroundColor: 'rgba(255, 99, 132, 0.7)',
-          borderColor: 'rgba(255, 99, 132, 1)',
-          borderWidth: 1
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      scales: {
-        y: {
-          beginAtZero: true
-        }
+  <script>
+    const ctx = document.getElementById('lineChart').getContext('2d');
+    const lineChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [
+          {
+            label: 'Soli Vakavuvale',
+            data: [4160, 3286, 3210, 3008, 2385.10, 4436],
+            borderColor: 'rgba(54, 162, 235, 0.9)',
+            backgroundColor: 'rgba(54, 162, 235, 0.3)',
+            fill: true,
+            tension: 0.3,
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            borderWidth: 3
+          },
+          {
+            label: 'Vakamisinare',
+            data: [2500, 1693, 2419, 1400, 1090, 2220],
+            borderColor: 'rgba(255, 99, 132, 0.9)',
+            backgroundColor: 'rgba(255, 99, 132, 0.3)',
+            fill: true,
+            tension: 0.3,
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            borderWidth: 3
+          }
+        ]
       },
-      plugins: {
-        title: {
-          display: true,
-          text: 'Monthly Comparison: Income vs Vakamisinare'
+      options: {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Monthly Soli Vakavuvale vs Vakamisinare Contributions'
+          },
+          legend: {
+            position: 'top',
+          },
+          tooltip: {
+            mode: 'index',
+            intersect: false,
+          }
         },
-        legend: {
-          position: 'top'
+        interaction: {
+          mode: 'nearest',
+          intersect: false
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              // Include dollar sign in y axis labels
+              callback: function(value) {
+                return '$' + value.toLocaleString();
+              }
+            }
+          }
         }
       }
-    }
-  });
-</script>
+    });
+  </script>
 
 </body>
 </html>
