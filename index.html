@@ -3,62 +3,123 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Church Finance Dashboard</title>
+  <title>Lagilagi Church Finance Dashboard</title>
   <style>
+    :root {
+      --primary: #00695c;
+      --accent: #26a69a;
+      --danger: #e53935;
+      --light: #f4f6f9;
+      --text: #333;
+      --white: #ffffff;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f6f9;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--light);
       margin: 0;
-      padding: 20px;
+      padding: 0;
+      color: var(--text);
     }
-    h1, h2 {
+
+    header {
+      background-color: var(--primary);
+      color: var(--white);
+      padding: 20px;
       text-align: center;
-    }
-    .dashboard {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-      margin-bottom: 30px;
-    }
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
-    canvas {
-      background: white;
-      border-radius: 12px;
-      padding: 10px;
-      margin: 20px auto;
-      display: block;
+
+    header h1 {
+      margin: 0;
+      font-size: 28px;
     }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      padding: 30px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .card {
+      background: var(--white);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      color: var(--primary);
+    }
+
+    .card p {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
     .progress-container {
-      background: #eee;
+      background: #ddd;
       border-radius: 20px;
       overflow: hidden;
       margin-top: 10px;
     }
+
     .progress-bar {
       height: 20px;
-      background: #28a745;
+      background: var(--accent);
       width: 33%;
+      transition: width 0.4s ease;
     }
+
+    canvas {
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      margin: 30px auto;
+      display: block;
+      padding: 10px;
+      max-width: 100%;
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--primary);
+      margin-top: 40px;
+    }
+
     iframe {
-      width: 100%;
+      width: 95%;
       height: 600px;
       border: none;
-      margin-top: 30px;
+      margin: 20px auto;
+      display: block;
       border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 22px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <h1>Lagilagi Church Finance Dashboard</h1>
+  <header>
+    <h1>Lagilagi Church Finance Dashboard</h1>
+  </header>
 
-  <div class="dashboard">
+  <section class="dashboard">
     <div class="card">
       <h3>Total Income (Jan–Jun)</h3>
       <p>$31,308.45</p>
@@ -72,7 +133,7 @@
       <p>$22,939.65</p>
     </div>
     <div class="card">
-      <h3>Remaining Soli Vakavuvale Estimate</h3>
+      <h3>Soli Vakavuvale Remaining Estimate</h3>
       <p>$24,926.55</p>
     </div>
     <div class="card" style="grid-column: span 2;">
@@ -82,7 +143,7 @@
         <div class="progress-bar" style="width: 33%;"></div>
       </div>
     </div>
-  </div>
+  </section>
 
   <canvas id="monthlyChart" width="600" height="300"></canvas>
   <canvas id="soliLineChart" width="600" height="300"></canvas>
@@ -107,12 +168,12 @@
           {
             label: 'Income',
             data: income,
-            backgroundColor: '#28a745'
+            backgroundColor: '#26a69a'
           },
           {
             label: 'Expenditure',
             data: expenditure,
-            backgroundColor: '#dc3545'
+            backgroundColor: '#e53935'
           }
         ]
       },
@@ -143,6 +204,7 @@
         }]
       },
       options: {
+        responsive: true,
         plugins: {
           title: {
             display: true,
