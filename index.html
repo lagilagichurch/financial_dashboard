@@ -113,8 +113,9 @@
       box-shadow: 0 4px 8px rgba(0,0,0,0.05);
       margin: 30px auto;
       display: block;
-      padding: 10px;
-      max-width: 100%;
+      max-width: 100% !important;
+      width: 95vw;  /* Responsive width */
+      height: 400px; /* Fixed height for visibility */
     }
     h2 {
       text-align: center;
@@ -133,6 +134,9 @@
     @media (max-width: 600px) {
       header h1 {
         font-size: 22px;
+      }
+      canvas {
+        height: 300px;
       }
     }
   </style>
@@ -180,16 +184,20 @@
     </div>
   </section>
 
-  <h2>Monthly Soli Vakavuvale vs Vakamisinare</h2>
+  <h2>Monthly Soli Vakavuvale vs Vakamisinare (Line Chart)</h2>
   <canvas id="lineChart"></canvas>
+
+  <h2>Monthly Total Income vs Expenditure (Bar Chart)</h2>
+  <canvas id="barChart"></canvas>
 
   <h2>📋 Detailed Income & Expenditure Table</h2>
   <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQtRqkHaF_0ZZse_OvtAWBQW_XYTKWhb9NOreAPzYLj15dH3mVu2MRfaw6ZLf0u8Q/pubhtml?widget=true&amp;headers=false"></iframe>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-    const ctx = document.getElementById('lineChart').getContext('2d');
-    const lineChart = new Chart(ctx, {
+    // Line Chart (Soli Vakavuvale vs Vakamisinare)
+    const ctxLine = document.getElementById('lineChart').getContext('2d');
+    const lineChart = new Chart(ctxLine, {
       type: 'line',
       data: {
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
@@ -224,6 +232,61 @@
           title: {
             display: true,
             text: 'Monthly Soli Vakavuvale vs Vakamisinare Contributions'
+          },
+          legend: {
+            position: 'top',
+          },
+          tooltip: {
+            mode: 'index',
+            intersect: false,
+          }
+        },
+        interaction: {
+          mode: 'nearest',
+          intersect: false
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: function(value) {
+                return '$' + value.toLocaleString();
+              }
+            }
+          }
+        }
+      }
+    });
+
+    // Bar Chart (Total Income vs Total Expenditure)
+    const ctxBar = document.getElementById('barChart').getContext('2d');
+    const barChart = new Chart(ctxBar, {
+      type: 'bar',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [
+          {
+            label: 'Total Income',
+            data: [4486.25, 5774.30, 6666.65, 4109.75, 2932.40, 7339.10],
+            backgroundColor: 'rgba(38, 166, 154, 0.7)',
+            borderColor: 'rgba(38, 166, 154, 1)',
+            borderWidth: 1
+          },
+          {
+            label: 'Total Expenditure',
+            data: [4128.00, 5328.90, 6179.60, 3738.35, 3200.85, 5734.70],
+            backgroundColor: 'rgba(229, 57, 53, 0.7)',
+            borderColor: 'rgba(229, 57, 53, 1)',
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Monthly Total Income vs Expenditure'
           },
           legend: {
             position: 'top',
