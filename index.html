@@ -12,6 +12,7 @@
       --light: #f4f6f9;
       --text: #333;
       --white: #fff;
+      --progress-bg: #ddd;
     }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -58,16 +59,53 @@
       font-weight: bold;
     }
     .progress-container {
-      background: #ddd;
+      background: var(--progress-bg);
       border-radius: 20px;
       overflow: hidden;
       margin-top: 10px;
+      position: relative;
+      height: 25px;
+      cursor: pointer;
     }
     .progress-bar {
-      height: 20px;
-      background: var(--accent);
-      width: 33%;
+      height: 100%;
+      color: var(--white);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      user-select: none;
       transition: width 0.4s ease;
+      border-radius: 20px 0 0 20px;
+    }
+    .progress-bar.vakamisinare {
+      background: var(--accent);
+    }
+    .progress-bar.soli {
+      background: var(--danger);
+    }
+    .progress-container:hover .tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(-35px);
+    }
+    .tooltip {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: rgba(0,0,0,0.75);
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 14px;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      pointer-events: none;
+      z-index: 10;
     }
     canvas {
       background: var(--white);
@@ -128,9 +166,16 @@
     </div>
     <div class="card" style="grid-column: span 2;">
       <h3>Vakamisinare Progress</h3>
-      <p>$11,322.00 of $34,261.65</p>
-      <div class="progress-container">
-        <div class="progress-bar" style="width: 33%;"></div>
+      <div class="progress-container" title="Collected: $11,322.00 / Target: $34,261.65">
+        <div class="progress-bar vakamisinare" style="width: 33.04%;">33.0%</div>
+        <div class="tooltip">Collected: $11,322.00 / Target: $34,261.65</div>
+      </div>
+    </div>
+    <div class="card" style="grid-column: span 2;">
+      <h3>Soli Vakavuvale Progress</h3>
+      <div class="progress-container" title="Collected: $20,485.10 / Estimate: $45,411.65">
+        <div class="progress-bar soli" style="width: 45.1%;">45.1%</div>
+        <div class="tooltip">Collected: $20,485.10 / Estimate: $45,411.65</div>
       </div>
     </div>
   </section>
@@ -196,7 +241,6 @@
           y: {
             beginAtZero: true,
             ticks: {
-              // Include dollar sign in y axis labels
               callback: function(value) {
                 return '$' + value.toLocaleString();
               }
