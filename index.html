@@ -2,117 +2,231 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Church Finance Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lagilagi Church Finance Dashboard</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f6f9;
-      margin: 0;
-      padding: 20px;
+    :root {
+      --primary: #00695c;
+      --accent: #26a69a;
+      --danger: #e53935;
+      --light: #f4f6f9;
+      --text: #333;
+      --white: #fff;
+      --progress-bg: #ddd;
     }
-    h1, h2 {
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--light);
+      margin: 0;
+      padding: 0;
+      color: var(--text);
+    }
+    header {
+      background-color: var(--primary);
+      color: var(--white);
+      padding: 20px;
       text-align: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 28px;
     }
     .dashboard {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 20px;
-      margin-bottom: 30px;
+      padding: 30px 20px;
+      max-width: 1200px;
+      margin: auto;
     }
     .card {
-      background: white;
+      background: var(--white);
       padding: 20px;
       border-radius: 12px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      transition: transform 0.2s ease;
     }
-    canvas {
-      background: white;
-      border-radius: 12px;
-      padding: 10px;
-      margin: 20px auto;
-      display: block;
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card h3 {
+      margin-top: 0;
+      color: var(--primary);
+    }
+    .card p {
+      font-size: 20px;
+      font-weight: bold;
     }
     .progress-container {
-      background: #eee;
+      background: var(--progress-bg);
       border-radius: 20px;
       overflow: hidden;
       margin-top: 10px;
+      position: relative;
+      height: 25px;
+      cursor: pointer;
     }
     .progress-bar {
-      height: 20px;
-      background: #28a745;
-      width: 33%;
+      height: 100%;
+      color: var(--white);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      user-select: none;
+      transition: width 0.4s ease;
+      border-radius: 20px 0 0 20px;
+    }
+    .progress-bar.vakamisinare {
+      background: var(--accent);
+    }
+    .progress-bar.soli {
+      background: var(--danger);
+    }
+    .progress-container:hover .tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(-35px);
+    }
+    .tooltip {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: rgba(0,0,0,0.75);
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 14px;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      pointer-events: none;
+      z-index: 10;
+    }
+    canvas {
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      margin: 30px auto;
+      display: block;
+      max-width: 100% !important;
+      width: 95vw;  /* Responsive width */
+      height: 400px; /* Fixed height for visibility */
+    }
+    h2 {
+      text-align: center;
+      color: var(--primary);
+      margin-top: 40px;
     }
     iframe {
-      width: 100%;
+      width: 95%;
       height: 600px;
       border: none;
-      margin-top: 30px;
+      margin: 20px auto 60px;
+      display: block;
       border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 22px;
+      }
+      canvas {
+        height: 300px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <h1>Lagilagi Church Finance Dashboard</h1>
+  <header>
+    <h1>Lagilagi Church Finance Dashboard</h1>
+  </header>
 
-  <div class="dashboard">
-    <div class="card">
-      <h3>Total Income (Jan–Jun)</h3>
-      <p>$31,308.45</p>
-    </div>
-    <div class="card">
-      <h3>Total Expenditure (Jan–Jun)</h3>
-      <p>$28,310.40</p>
-    </div>
-    <div class="card">
-      <h3>Vakamisinare Target Remaining</h3>
-      <p>$22,939.65</p>
-    </div>
-    <div class="card">
-      <h3>Remaining Soli Vakavuvale Estimate</h3>
-      <p>$24,926.55</p>
-    </div>
-    <div class="card" style="grid-column: span 2;">
-      <h3>Vakamisinare Progress</h3>
-      <p>$11,322.00 of $34,261.65</p>
-      <div class="progress-container">
-        <div class="progress-bar" style="width: 33%;"></div>
-      </div>
+ <section class="dashboard">
+  <div class="card">
+    <h3>Total Income (Jan–Jun)</h3>
+    <p>$31,308.45</p>
+  </div>
+  <div class="card">
+    <h3>Total Expenditure (Jan–Jun)</h3>
+    <p>$28,310.40</p>
+  </div>
+  <div class="card">
+    <h3>Total Soli Vakavuvale (Jan–Jun)</h3>
+    <p>$20,485.10</p>
+  </div>
+  <div class="card">
+    <h3>Total Vakamisinare (Jan–Jun)</h3>
+    <p>$11,322.00</p>
+  </div>
+  <div class="card">
+    <h3>Vakamisinare Target Remaining</h3>
+    <p>$22,939.65</p>
+  </div>
+  <div class="card">
+    <h3>Soli Vakavuvale Remaining Estimate</h3>
+    <p>$24,926.55</p>
+  </div>
+  <div class="card" style="grid-column: span 2;">
+    <h3>Vakamisinare Progress</h3>
+    <div class="progress-container" title="Collected: $11,322.00 / Target: $34,261.65">
+      <div class="progress-bar vakamisinare" style="width: 33.04%;">33.0%</div>
+      <div class="tooltip">Collected: $11,322.00 / Target: $34,261.65</div>
     </div>
   </div>
+  <div class="card" style="grid-column: span 2;">
+    <h3>Soli Vakavuvale Progress</h3>
+    <div class="progress-container" title="Collected: $20,485.10 / Estimate: $45,411.65">
+      <div class="progress-bar soli" style="width: 45.1%;">45.1%</div>
+      <div class="tooltip">Collected: $20,485.10 / Estimate: $45,411.65</div>
+    </div>
+  </div>
+</section>
 
-  <canvas id="monthlyChart" width="600" height="300"></canvas>
-  <canvas id="soliLineChart" width="600" height="300"></canvas>
+  <h2>Monthly Soli Vakavuvale vs Vakamisinare (Line Chart)</h2>
+  <canvas id="lineChart"></canvas>
+
+  <h2>Monthly Total Income vs Expenditure (Bar Chart)</h2>
+  <canvas id="barChart"></canvas>
 
   <h2>📋 Detailed Income & Expenditure Table</h2>
   <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQtRqkHaF_0ZZse_OvtAWBQW_XYTKWhb9NOreAPzYLj15dH3mVu2MRfaw6ZLf0u8Q/pubhtml?widget=true&amp;headers=false"></iframe>
 
-  <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
   <script>
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
-    const income = [4486.25, 5774.30, 6666.65, 4109.75, 2932.40, 7339.10];
-    const expenditure = [4128.00, 5328.90, 6179.60, 3738.35, 3200.85, 5734.70];
-
-    const ctx = document.getElementById('monthlyChart').getContext('2d');
-    new Chart(ctx, {
-      type: 'bar',
+    // Line Chart (Soli Vakavuvale vs Vakamisinare)
+    const ctxLine = document.getElementById('lineChart').getContext('2d');
+    const lineChart = new Chart(ctxLine, {
+      type: 'line',
       data: {
-        labels: months,
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
         datasets: [
           {
-            label: 'Income',
-            data: income,
-            backgroundColor: '#28a745'
+            label: 'Soli Vakavuvale',
+            data: [4160, 3286, 3210, 3008, 2385.10, 4436],
+            borderColor: 'rgba(54, 162, 235, 0.9)',
+            backgroundColor: 'rgba(54, 162, 235, 0.3)',
+            fill: true,
+            tension: 0.3,
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            borderWidth: 3
           },
           {
-            label: 'Expenditure',
-            data: expenditure,
-            backgroundColor: '#dc3545'
+            label: 'Vakamisinare',
+            data: [2500, 1693, 2419, 1400, 1090, 2220],
+            borderColor: 'rgba(255, 99, 132, 0.9)',
+            backgroundColor: 'rgba(255, 99, 132, 0.3)',
+            fill: true,
+            tension: 0.3,
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            borderWidth: 3
           }
         ]
       },
@@ -121,32 +235,83 @@
         plugins: {
           title: {
             display: true,
-            text: 'Monthly Income vs Expenditure'
+            text: 'Monthly Soli Vakavuvale vs Vakamisinare Contributions'
+          },
+          legend: {
+            position: 'top',
+          },
+          tooltip: {
+            mode: 'index',
+            intersect: false,
+          }
+        },
+        interaction: {
+          mode: 'nearest',
+          intersect: false
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: function(value) {
+                return '$' + value.toLocaleString();
+              }
+            }
           }
         }
       }
     });
 
-    const soliData = [4160, 3286, 3210, 3008, 2385.10, 4436.00];
-    const ctx2 = document.getElementById('soliLineChart').getContext('2d');
-    new Chart(ctx2, {
-      type: 'line',
+    // Bar Chart (Total Income vs Total Expenditure)
+    const ctxBar = document.getElementById('barChart').getContext('2d');
+    const barChart = new Chart(ctxBar, {
+      type: 'bar',
       data: {
-        labels: months,
-        datasets: [{
-          label: 'Soli Vakavuvale',
-          data: soliData,
-          borderColor: '#007bff',
-          backgroundColor: '#007bff44',
-          fill: true,
-          tension: 0.3
-        }]
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [
+          {
+            label: 'Total Income',
+            data: [4486.25, 5774.30, 6666.65, 4109.75, 2932.40, 7339.10],
+            backgroundColor: 'rgba(38, 166, 154, 0.7)',
+            borderColor: 'rgba(38, 166, 154, 1)',
+            borderWidth: 1
+          },
+          {
+            label: 'Total Expenditure',
+            data: [4128.00, 5328.90, 6179.60, 3738.35, 3200.85, 5734.70],
+            backgroundColor: 'rgba(229, 57, 53, 0.7)',
+            borderColor: 'rgba(229, 57, 53, 1)',
+            borderWidth: 1
+          }
+        ]
       },
       options: {
+        responsive: true,
         plugins: {
           title: {
             display: true,
-            text: 'Soli Vakavuvale Monthly Contributions'
+            text: 'Monthly Total Income vs Expenditure'
+          },
+          legend: {
+            position: 'top',
+          },
+          tooltip: {
+            mode: 'index',
+            intersect: false,
+          }
+        },
+        interaction: {
+          mode: 'nearest',
+          intersect: false
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: function(value) {
+                return '$' + value.toLocaleString();
+              }
+            }
           }
         }
       }
