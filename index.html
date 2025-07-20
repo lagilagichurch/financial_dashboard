@@ -13,7 +13,13 @@
       --text: #333;
       --white: #fff;
       --progress-bg: #ddd;
+
+      --income-color: #4caf50;
+      --expense-color: #ff7043;
+      --soli-color: #2196f3;
+      --vakamisinare-color: #ab47bc;
     }
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: var(--light);
@@ -21,6 +27,7 @@
       padding: 0;
       color: var(--text);
     }
+
     header {
       background-color: var(--primary);
       color: var(--white);
@@ -28,10 +35,12 @@
       text-align: center;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
+
     header h1 {
       margin: 0;
       font-size: 28px;
     }
+
     .dashboard {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -40,6 +49,7 @@
       max-width: 1200px;
       margin: auto;
     }
+
     .card {
       background: var(--white);
       padding: 20px;
@@ -47,17 +57,25 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.06);
       transition: transform 0.2s ease;
     }
+
     .card:hover {
       transform: translateY(-5px);
     }
+
     .card h3 {
       margin-top: 0;
-      color: var(--primary);
     }
+
     .card p {
       font-size: 20px;
       font-weight: bold;
     }
+
+    .income { color: var(--income-color); }
+    .expense { color: var(--expense-color); }
+    .soli { color: var(--soli-color); }
+    .vakamisinare { color: var(--vakamisinare-color); }
+
     .progress-container {
       background: var(--progress-bg);
       border-radius: 20px;
@@ -67,6 +85,7 @@
       height: 25px;
       cursor: pointer;
     }
+
     .progress-bar {
       height: 100%;
       color: var(--white);
@@ -79,17 +98,15 @@
       transition: width 0.4s ease;
       border-radius: 20px 0 0 20px;
     }
+
     .progress-bar.vakamisinare {
-      background: var(--danger);
+      background: var(--vakamisinare-color);
     }
+
     .progress-bar.soli {
-      background: var(--danger);
+      background: var(--soli-color);
     }
-    .progress-container:hover .tooltip {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(-35px);
-    }
+
     .tooltip {
       position: absolute;
       bottom: 100%;
@@ -107,6 +124,13 @@
       pointer-events: none;
       z-index: 10;
     }
+
+    .progress-container:hover .tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(-35px);
+    }
+
     canvas {
       background: var(--white);
       border-radius: 12px;
@@ -117,11 +141,13 @@
       width: 95vw;
       height: 400px;
     }
+
     h2 {
       text-align: center;
       color: var(--primary);
       margin-top: 40px;
     }
+
     iframe {
       width: 95%;
       height: 600px;
@@ -131,6 +157,7 @@
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
+
     @media (max-width: 600px) {
       header h1 {
         font-size: 22px;
@@ -148,70 +175,32 @@
 </header>
 
 <section class="dashboard">
-  <div class="card">
-    <h3>Total Income Budget</h3>
-    <p>$86,311.65</p>
-  </div>
-  <div class="card">
-    <h3>Actual Total Income (Jan–Jun)</h3>
-    <p>$31,308.45</p>
-  </div>
-  <div class="card">
-    <h3>Remaining Income Estimate</h3>
-    <p>$55,003.20</p>
-  </div>
-  <div class="card">
-    <h3>Total Expenditure Budget</h3>
-    <p>$86,811.65</p>
-  </div>
-  <div class="card">
-    <h3>Actual Total Expenditure (Jan–Jun)</h3>
-    <p>$28,310.40</p>
-  </div>
-  <div class="card">
-    <h3>Remaining Expense Budget</h3>
-    <p>$58,501.25</p>
-  </div>
-  <div class="card">
-    <h3>Total Soli Vakavuvale Budget</h3>
-    <p>$45,411.65</p>
-  </div>
-  <div class="card">
-    <h3>Actual Total Soli Vakavuvale (Jan–Jun)</h3>
-    <p>$20,485.10</p>
-  </div>
-  <div class="card">
-    <h3>Soli Vakavuvale Remaining Estimate</h3>
-    <p>$24,926.55</p>
-  </div>
-  <div class="card">
-    <h3>Total Vakamisinare Budget</h3>
-    <p>$34,261.65</p>
-  </div>
-  <div class="card">
-    <h3>Actual Total Vakamisinare (Jan–Jun)</h3>
-    <p>$11,322.00</p>
-  </div>
-  <div class="card">
-    <h3>Vakamisinare Target Remaining</h3>
-    <p>$22,939.65</p>
-  </div>
-  
-  <!-- NEW CARDS -->
-  
-  
-  
-  
-  <!-- PROGRESS BARS -->
+  <div class="card"><h3 class="income">Total Income Budget</h3><p class="income">$86,311.65</p></div>
+  <div class="card"><h3 class="income">Actual Total Income (Jan–Jun)</h3><p class="income">$31,308.45</p></div>
+  <div class="card"><h3 class="income">Remaining Income Estimate</h3><p class="income">$55,003.20</p></div>
+
+  <div class="card"><h3 class="expense">Total Expenditure Budget</h3><p class="expense">$86,811.65</p></div>
+  <div class="card"><h3 class="expense">Actual Total Expenditure (Jan–Jun)</h3><p class="expense">$28,310.40</p></div>
+  <div class="card"><h3 class="expense">Remaining Expense Budget</h3><p class="expense">$58,501.25</p></div>
+
+  <div class="card"><h3 class="soli">Total Soli Vakavuvale Budget</h3><p class="soli">$45,411.65</p></div>
+  <div class="card"><h3 class="soli">Actual Total Soli Vakavuvale (Jan–Jun)</h3><p class="soli">$20,485.10</p></div>
+  <div class="card"><h3 class="soli">Soli Vakavuvale Remaining Estimate</h3><p class="soli">$24,926.55</p></div>
+
+  <div class="card"><h3 class="vakamisinare">Total Vakamisinare Budget</h3><p class="vakamisinare">$34,261.65</p></div>
+  <div class="card"><h3 class="vakamisinare">Actual Total Vakamisinare (Jan–Jun)</h3><p class="vakamisinare">$11,322.00</p></div>
+  <div class="card"><h3 class="vakamisinare">Vakamisinare Target Remaining</h3><p class="vakamisinare">$22,939.65</p></div>
+
+  <!-- Progress bars -->
   <div class="card" style="grid-column: span 2;">
-    <h3>Vakamisinare Progress</h3>
+    <h3 class="vakamisinare">Vakamisinare Progress</h3>
     <div class="progress-container" title="Collected: $11,322.00 / Target: $34,261.65">
       <div class="progress-bar vakamisinare" style="width: 33.04%;">33.0%</div>
       <div class="tooltip">Collected: $11,322.00 / Target: $34,261.65</div>
     </div>
   </div>
   <div class="card" style="grid-column: span 2;">
-    <h3>Soli Vakavuvale Progress</h3>
+    <h3 class="soli">Soli Vakavuvale Progress</h3>
     <div class="progress-container" title="Collected: $20,485.10 / Estimate: $45,411.65">
       <div class="progress-bar soli" style="width: 45.1%;">45.1%</div>
       <div class="tooltip">Collected: $20,485.10 / Estimate: $45,411.65</div>
@@ -239,8 +228,8 @@
         {
           label: 'Soli Vakavuvale',
           data: [4160, 3286, 3210, 3008, 2385.10, 4436],
-          borderColor: 'rgba(54, 162, 235, 0.9)',
-          backgroundColor: 'rgba(54, 162, 235, 0.3)',
+          borderColor: '#2196f3',
+          backgroundColor: 'rgba(33, 150, 243, 0.3)',
           fill: true,
           tension: 0.3,
           pointRadius: 5,
@@ -250,8 +239,8 @@
         {
           label: 'Vakamisinare',
           data: [2500, 1693, 2419, 1400, 1090, 2220],
-          borderColor: 'rgba(255, 99, 132, 0.9)',
-          backgroundColor: 'rgba(255, 99, 132, 0.3)',
+          borderColor: '#ab47bc',
+          backgroundColor: 'rgba(171, 71, 188, 0.3)',
           fill: true,
           tension: 0.3,
           pointRadius: 5,
@@ -263,30 +252,15 @@
     options: {
       responsive: true,
       plugins: {
-        title: {
-          display: true,
-          text: 'Monthly Soli Vakavuvale vs Vakamisinare Contributions'
-        },
-        legend: {
-          position: 'top',
-        },
-        tooltip: {
-          mode: 'index',
-          intersect: false,
-        }
+        title: { display: true, text: 'Monthly Soli Vakavuvale vs Vakamisinare Contributions' },
+        legend: { position: 'top' },
+        tooltip: { mode: 'index', intersect: false }
       },
-      interaction: {
-        mode: 'nearest',
-        intersect: false
-      },
+      interaction: { mode: 'nearest', intersect: false },
       scales: {
         y: {
           beginAtZero: true,
-          ticks: {
-            callback: function(value) {
-              return '$' + value.toLocaleString();
-            }
-          }
+          ticks: { callback: value => '$' + value.toLocaleString() }
         }
       }
     }
@@ -301,15 +275,15 @@
         {
           label: 'Total Income',
           data: [4486.25, 5774.30, 6666.65, 4109.75, 2932.40, 7339.10],
-          backgroundColor: 'rgba(38, 166, 154, 0.7)',
-          borderColor: 'rgba(38, 166, 154, 1)',
+          backgroundColor: '#4caf50',
+          borderColor: '#388e3c',
           borderWidth: 1
         },
         {
           label: 'Total Expenditure',
           data: [4128.00, 5328.90, 6179.60, 3738.35, 3200.85, 5734.70],
-          backgroundColor: 'rgba(229, 57, 53, 0.7)',
-          borderColor: 'rgba(229, 57, 53, 1)',
+          backgroundColor: '#ff7043',
+          borderColor: '#e64a19',
           borderWidth: 1
         }
       ]
@@ -317,30 +291,15 @@
     options: {
       responsive: true,
       plugins: {
-        title: {
-          display: true,
-          text: 'Monthly Total Income vs Expenditure'
-        },
-        legend: {
-          position: 'top',
-        },
-        tooltip: {
-          mode: 'index',
-          intersect: false,
-        }
+        title: { display: true, text: 'Monthly Total Income vs Expenditure' },
+        legend: { position: 'top' },
+        tooltip: { mode: 'index', intersect: false }
       },
-      interaction: {
-        mode: 'nearest',
-        intersect: false
-      },
+      interaction: { mode: 'nearest', intersect: false },
       scales: {
         y: {
           beginAtZero: true,
-          ticks: {
-            callback: function(value) {
-              return '$' + value.toLocaleString();
-            }
-          }
+          ticks: { callback: value => '$' + value.toLocaleString() }
         }
       }
     }
