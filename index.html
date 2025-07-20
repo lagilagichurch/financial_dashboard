@@ -114,8 +114,8 @@
       margin: 30px auto;
       display: block;
       max-width: 100% !important;
-      width: 95vw;  /* Responsive width */
-      height: 400px; /* Fixed height for visibility */
+      width: 95vw;
+      height: 400px;
     }
     h2 {
       text-align: center;
@@ -143,11 +143,11 @@
 </head>
 <body>
 
-  <header>
-    <h1>Lagilagi Church 6 Months Finance Dashboard - January to June 2025</h1>
-  </header>
+<header>
+  <h1>Lagilagi Church 6 Months Finance Dashboard - January to June 2025</h1>
+</header>
 
- <section class="dashboard">
+<section class="dashboard">
   <div class="card">
     <h3>Total Income (Jan–Jun)</h3>
     <p>$31,308.45</p>
@@ -172,6 +172,24 @@
     <h3>Soli Vakavuvale Remaining Estimate</h3>
     <p>$24,926.55</p>
   </div>
+  <!-- NEW CARDS -->
+  <div class="card">
+    <h3>Total Income (Expected)</h3>
+    <p>$86,311.65</p>
+  </div>
+  <div class="card">
+    <h3>Remaining Income Estimate</h3>
+    <p>$55,003.20</p>
+  </div>
+  <div class="card">
+    <h3>Total Expenditure Budget</h3>
+    <p>$86,811.65</p>
+  </div>
+  <div class="card">
+    <h3>Remaining Expense Budget</h3>
+    <p>$58,501.25</p>
+  </div>
+  <!-- PROGRESS BARS -->
   <div class="card" style="grid-column: span 2;">
     <h3>Vakamisinare Progress</h3>
     <div class="progress-container" title="Collected: $11,322.00 / Target: $34,261.65">
@@ -188,136 +206,135 @@
   </div>
 </section>
 
-  <h2>Monthly Soli Vakavuvale vs Vakamisinare (Line Chart)</h2>
-  <canvas id="lineChart"></canvas>
+<h2>Monthly Soli Vakavuvale vs Vakamisinare (Line Chart)</h2>
+<canvas id="lineChart"></canvas>
 
-  <h2>Monthly Total Income vs Expenditure (Bar Chart)</h2>
-  <canvas id="barChart"></canvas>
+<h2>Monthly Total Income vs Expenditure (Bar Chart)</h2>
+<canvas id="barChart"></canvas>
 
-  <h2>📋 Detailed Income & Expenditure Table</h2>
-  <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQtRqkHaF_0ZZse_OvtAWBQW_XYTKWhb9NOreAPzYLj15dH3mVu2MRfaw6ZLf0u8Q/pubhtml?widget=true&amp;headers=false"></iframe>
+<h2>📋 Detailed Income & Expenditure Table</h2>
+<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQtRqkHaF_0ZZse_OvtAWBQW_XYTKWhb9NOreAPzYLj15dH3mVu2MRfaw6ZLf0u8Q/pubhtml?widget=true&amp;headers=false"></iframe>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
-    // Line Chart (Soli Vakavuvale vs Vakamisinare)
-    const ctxLine = document.getElementById('lineChart').getContext('2d');
-    const lineChart = new Chart(ctxLine, {
-      type: 'line',
-      data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-        datasets: [
-          {
-            label: 'Soli Vakavuvale',
-            data: [4160, 3286, 3210, 3008, 2385.10, 4436],
-            borderColor: 'rgba(54, 162, 235, 0.9)',
-            backgroundColor: 'rgba(54, 162, 235, 0.3)',
-            fill: true,
-            tension: 0.3,
-            pointRadius: 5,
-            pointHoverRadius: 7,
-            borderWidth: 3
-          },
-          {
-            label: 'Vakamisinare',
-            data: [2500, 1693, 2419, 1400, 1090, 2220],
-            borderColor: 'rgba(255, 99, 132, 0.9)',
-            backgroundColor: 'rgba(255, 99, 132, 0.3)',
-            fill: true,
-            tension: 0.3,
-            pointRadius: 5,
-            pointHoverRadius: 7,
-            borderWidth: 3
-          }
-        ]
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctxLine = document.getElementById('lineChart').getContext('2d');
+  const lineChart = new Chart(ctxLine, {
+    type: 'line',
+    data: {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+      datasets: [
+        {
+          label: 'Soli Vakavuvale',
+          data: [4160, 3286, 3210, 3008, 2385.10, 4436],
+          borderColor: 'rgba(54, 162, 235, 0.9)',
+          backgroundColor: 'rgba(54, 162, 235, 0.3)',
+          fill: true,
+          tension: 0.3,
+          pointRadius: 5,
+          pointHoverRadius: 7,
+          borderWidth: 3
+        },
+        {
+          label: 'Vakamisinare',
+          data: [2500, 1693, 2419, 1400, 1090, 2220],
+          borderColor: 'rgba(255, 99, 132, 0.9)',
+          backgroundColor: 'rgba(255, 99, 132, 0.3)',
+          fill: true,
+          tension: 0.3,
+          pointRadius: 5,
+          pointHoverRadius: 7,
+          borderWidth: 3
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: 'Monthly Soli Vakavuvale vs Vakamisinare Contributions'
+        },
+        legend: {
+          position: 'top',
+        },
+        tooltip: {
+          mode: 'index',
+          intersect: false,
+        }
       },
-      options: {
-        responsive: true,
-        plugins: {
-          title: {
-            display: true,
-            text: 'Monthly Soli Vakavuvale vs Vakamisinare Contributions'
-          },
-          legend: {
-            position: 'top',
-          },
-          tooltip: {
-            mode: 'index',
-            intersect: false,
-          }
-        },
-        interaction: {
-          mode: 'nearest',
-          intersect: false
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: {
-              callback: function(value) {
-                return '$' + value.toLocaleString();
-              }
+      interaction: {
+        mode: 'nearest',
+        intersect: false
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            callback: function(value) {
+              return '$' + value.toLocaleString();
             }
           }
         }
       }
-    });
+    }
+  });
 
-    // Bar Chart (Total Income vs Total Expenditure)
-    const ctxBar = document.getElementById('barChart').getContext('2d');
-    const barChart = new Chart(ctxBar, {
-      type: 'bar',
-      data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-        datasets: [
-          {
-            label: 'Total Income',
-            data: [4486.25, 5774.30, 6666.65, 4109.75, 2932.40, 7339.10],
-            backgroundColor: 'rgba(38, 166, 154, 0.7)',
-            borderColor: 'rgba(38, 166, 154, 1)',
-            borderWidth: 1
-          },
-          {
-            label: 'Total Expenditure',
-            data: [4128.00, 5328.90, 6179.60, 3738.35, 3200.85, 5734.70],
-            backgroundColor: 'rgba(229, 57, 53, 0.7)',
-            borderColor: 'rgba(229, 57, 53, 1)',
-            borderWidth: 1
-          }
-        ]
+  const ctxBar = document.getElementById('barChart').getContext('2d');
+  const barChart = new Chart(ctxBar, {
+    type: 'bar',
+    data: {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+      datasets: [
+        {
+          label: 'Total Income',
+          data: [4486.25, 5774.30, 6666.65, 4109.75, 2932.40, 7339.10],
+          backgroundColor: 'rgba(38, 166, 154, 0.7)',
+          borderColor: 'rgba(38, 166, 154, 1)',
+          borderWidth: 1
+        },
+        {
+          label: 'Total Expenditure',
+          data: [4128.00, 5328.90, 6179.60, 3738.35, 3200.85, 5734.70],
+          backgroundColor: 'rgba(229, 57, 53, 0.7)',
+          borderColor: 'rgba(229, 57, 53, 1)',
+          borderWidth: 1
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: 'Monthly Total Income vs Expenditure'
+        },
+        legend: {
+          position: 'top',
+        },
+        tooltip: {
+          mode: 'index',
+          intersect: false,
+        }
       },
-      options: {
-        responsive: true,
-        plugins: {
-          title: {
-            display: true,
-            text: 'Monthly Total Income vs Expenditure'
-          },
-          legend: {
-            position: 'top',
-          },
-          tooltip: {
-            mode: 'index',
-            intersect: false,
-          }
-        },
-        interaction: {
-          mode: 'nearest',
-          intersect: false
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: {
-              callback: function(value) {
-                return '$' + value.toLocaleString();
-              }
+      interaction: {
+        mode: 'nearest',
+        intersect: false
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            callback: function(value) {
+              return '$' + value.toLocaleString();
             }
           }
         }
       }
-    });
-  </script>
-  <footer style="
+    }
+  });
+</script>
+
+<footer style="
   background-color: var(--primary);
   color: var(--white);
   text-align: center;
